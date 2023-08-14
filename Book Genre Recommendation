@@ -1,0 +1,67 @@
+import sys
+
+class BookRecommender:
+    def __init__(self):
+        # Sample genre-to-keyword mapping
+        self.genres = {
+            "fantasy": ["magic", "dragons", "elves"],
+            "science fiction": ["space", "aliens", "futuristic"],
+            "romance": ["love", "relationship", "passion"],
+            "thriller": ["mystery", "suspense", "danger"],
+            "non-fiction": ["facts", "biography", "history"]
+        }
+
+        # Sample book recommendations per genre
+        self.recommendations = {
+            "fantasy": ["The Name of the Wind by Patrick Rothfuss", 
+                        "The Way of Kings by Brandon Sanderson", 
+                        "A Song of Ice and Fire by George R.R. Martin"],
+
+            "science fiction": ["Dune by Frank Herbert",
+                                "Foundation by Isaac Asimov",
+                                "Neuromancer by William Gibson"],
+
+            "romance": ["Pride and Prejudice by Jane Austen",
+                        "Outlander by Diana Gabaldon",
+                        "The Notebook by Nicholas Sparks"],
+
+            "thriller": ["The Girl with the Dragon Tattoo by Stieg Larsson",
+                         "Gone Girl by Gillian Flynn",
+                         "The Da Vinci Code by Dan Brown"],
+
+            "non-fiction": ["Sapiens by Yuval Noah Harari",
+                            "Educated by Tara Westover",
+                            "The Immortal Life of Henrietta Lacks by Rebecca Skloot"]
+        }
+
+    def suggest_genre(self, keyword):
+        for genre, keywords in self.genres.items():
+            if keyword.lower() in keywords:
+                return genre
+        return None
+
+    def get_recommendations(self, genre):
+        return self.recommendations.get(genre, [])
+
+def main():
+    recommender = BookRecommender()
+
+    keyword = input("Enter a keyword to get a book genre suggestion: ")
+    genre = recommender.suggest_genre(keyword)
+    if not genre:
+        print("Sorry, couldn't find a matching genre.")
+        sys.exit()
+
+    print(f"Suggested genre: {genre}")
+    interest = input("Interested in this genre? (yes/no) ")
+
+    if interest.lower() == "yes":
+        books = recommender.get_recommendations(genre)
+        print("Here are some book recommendations for you:")
+        for book in books:
+            print(f"- {book}")
+    else:
+        print("Okay, try another keyword!")
+
+if __name__ == "__main__":
+    main()
